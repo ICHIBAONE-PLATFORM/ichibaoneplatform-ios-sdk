@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "ichibaoneplatform-ios-sdk"
-  spec.version      = "0.0.1"
+  spec.version      = "0.0.2"
   spec.summary      = "Tracking and notification SDK APNs & FCM"
 
   # This description is used to generate tags and improve search results.
@@ -92,11 +92,18 @@ Pod::Spec.new do |spec|
   #
 
   spec.source_files  = "ichibaoneplatform-ios-sdk", "ichibaoneplatform-ios-sdk/Core/**/*.{h,m,swift}"
-  spec.exclude_files = "Classes/Exclude"
+
+  spec.subspec "Core" do |core|
+        core.source_files = "ichibaoneplatform-ios-sdk/Core/**/*.{h,m,swift}"
+  end
 
   spec.subspec "FCM" do |firebase|
       firebase.dependency "Firebase/Messaging"
       firebase.source_files = "ichibaoneplatform-ios-sdk/FCM/**/*.{h,m,swift}"
+  end
+
+  spec.subspec "Utils" do |utils|
+      utils.source_files = "ichibaoneplatform-ios-sdk/Utils/**/*.{h,m,swift}"
   end
 
   # spec.public_header_files = "Classes/**/*.h"

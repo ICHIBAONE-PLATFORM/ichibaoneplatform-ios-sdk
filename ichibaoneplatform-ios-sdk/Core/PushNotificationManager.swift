@@ -16,7 +16,7 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
         super.init()
     }
     
-    func initialize(useFirebase: Bool) {
+    public func initialize() {
         UNUserNotificationCenter.current().delegate = self
     }
     
@@ -32,7 +32,6 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
     }
     
     public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let tokenString = deviceToken.map { String(format: "%02x", $0) }.joined()
         self.updateDeviceToken(deviceToken)
     }
 
@@ -40,8 +39,24 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
        print("Failed to register: \(error.localizedDescription)")
     }
 
-    public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.banner, .sound])
+    // Handle foreground notification
+    public func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .sound, .badge])
+    }
+
+    // Handler user press notification
+    public func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        let userInfo = response.notification.request.content.userInfo
+        handleNotification(userInfo: userInfo)
+        completionHandler()
     }
     
     func updateDeviceToken(_ token: Data) {
@@ -71,5 +86,14 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
     /// Mock gửi lên server
     private func sendToServer(payload: [String: Any]) {
         print("📡 Sending push notification data to server: \(payload)")
+    }
+    
+    func handleNotification(userInfo: [AnyHashable: Any]) {
+        if let deeplink = userInfo["deeplink"] as? String,
+           let url = URL(string: deeplink) {
+            DispatchQueue.main.async {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
     }
 }

@@ -54,8 +54,6 @@
 		};
 		3E2337512D9F764400439FE3 /* ichibaoneplatform-ios-sdkTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = "ichibaoneplatform-ios-sdkTests";
 			sourceTree = "<group>";
 		};
