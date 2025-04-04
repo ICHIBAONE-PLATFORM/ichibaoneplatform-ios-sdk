@@ -8,6 +8,7 @@
 import UserNotifications
 
 public class Utils {
+    public init() {}
     public func downloadImage(from url: URL, completion: @escaping (UNNotificationAttachment?) -> Void) {
         let task = URLSession.shared.downloadTask(with: url) { (location, _, error) in
             guard let location = location, error == nil else {
