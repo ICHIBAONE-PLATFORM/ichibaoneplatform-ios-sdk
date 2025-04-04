@@ -6,6 +6,7 @@ target 'ichibaoneplatform-ios-sdk' do
   use_frameworks!
 
   # Pods for ichibaoneplatform-ios-sdk
+  pod 'Firebase/Messaging'
 
   target 'ichibaoneplatform-ios-sdkTests' do
     # Pods for testing
