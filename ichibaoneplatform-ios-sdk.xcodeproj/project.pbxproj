@@ -54,6 +54,8 @@
 		};
 		3E2337512D9F764400439FE3 /* ichibaoneplatform-ios-sdkTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "ichibaoneplatform-ios-sdkTests";
 			sourceTree = "<group>";
 		};
@@ -163,6 +165,7 @@
 				3E2337492D9F764400439FE3 /* Sources */,
 				3E23374A2D9F764400439FE3 /* Frameworks */,
 				3E23374B2D9F764400439FE3 /* Resources */,
+				D5BE390929773D6EEE2AAE57 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -275,6 +278,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D5BE390929773D6EEE2AAE57 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ichibaoneplatform-ios-sdk-ichibaoneplatform-ios-sdkTests/Pods-ichibaoneplatform-ios-sdk-ichibaoneplatform-ios-sdkTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ichibaoneplatform-ios-sdk-ichibaoneplatform-ios-sdkTests/Pods-ichibaoneplatform-ios-sdk-ichibaoneplatform-ios-sdkTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ichibaoneplatform-ios-sdk-ichibaoneplatform-ios-sdkTests/Pods-ichibaoneplatform-ios-sdk-ichibaoneplatform-ios-sdkTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
