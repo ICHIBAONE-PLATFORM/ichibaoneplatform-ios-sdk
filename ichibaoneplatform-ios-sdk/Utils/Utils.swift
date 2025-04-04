@@ -44,6 +44,12 @@ public class Utils {
                 if let apnsImage = userInfo["image"] as? String {
                     return apnsImage
                 }
+                
+                if let fcmOptions = userInfo["fcm_options"] as? [String: Any],
+                   let fcmImage = fcmOptions["image"] as? String {
+                    return fcmImage
+                }
+                
                 return nil
             }()
             
