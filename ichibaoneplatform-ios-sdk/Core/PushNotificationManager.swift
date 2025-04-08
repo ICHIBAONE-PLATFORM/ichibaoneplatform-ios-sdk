@@ -10,6 +10,7 @@ import UserNotifications
 @objcMembers
 public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate {
     @objc public static let shared = PushNotificationManager()
+    @objc public var handleForegroundNotification: Bool = false
     
     private(set) var deviceToken: String?
     
@@ -46,7 +47,11 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        completionHandler([.banner, .sound, .badge])
+        if handleForegroundNotification {
+            completionHandler([.banner, .sound, .badge])
+        } else {
+            completionHandler([])
+        }
     }
 
     // Handler user press notification
