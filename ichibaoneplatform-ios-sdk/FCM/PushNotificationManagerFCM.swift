@@ -1,24 +1,27 @@
 //
-//  PushNotificationManager.swift
+//  PushNotificationManagerFCM.swift
 //  ichibaoneplatform-ios-sdk
 //
-//  Created by Van Huy on 3/4/25.
+//  Created by Van Huy on 8/4/25.
 //
+
 import UIKit
 import UserNotifications
+import FirebaseMessaging
 
 @objcMembers
-public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate {
-    @objc public static let shared = PushNotificationManager()
+public class PushNotificationManagerFCM: NSObject, UNUserNotificationCenterDelegate, MessagingDelegate {
+    @objc public static let shared = PushNotificationManagerFCM()
     @objc public var handleForegroundNotification: Bool = false
     
-    private(set) var deviceToken: String?
+    private(set) var fcmToken: String?
     
     private override init() {
         super.init()
     }
     
     @objc public func initialize() {
+        Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
     }
     
@@ -34,7 +37,7 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
     }
     
     @objc public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        self.updateDeviceToken(deviceToken)
+        Messaging.messaging().apnsToken = deviceToken
     }
 
     @objc public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -65,23 +68,38 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
         completionHandler()
     }
     
-    @objc public func getDeviceToken() -> String? {
-        return self.deviceToken
+    @objc public func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        self.fcmToken = fcmToken
+        self.sendTokenToServer()
     }
     
-    func updateDeviceToken(_ token: Data) {
-        let tokenString = token.map { String(format: "%02x", $0) }.joined()
-        self.deviceToken = tokenString
-        sendTokenToServer()
-    }
+    @objc public func getFcmToken() async -> String? {
+        if let currentToken = self.fcmToken {
+            return currentToken
+        }
 
+        return await withCheckedContinuation { continuation in
+            Messaging.messaging().token { token, error in
+                if let error = error {
+                    continuation.resume(returning: nil)
+                } else if let token = token {
+                    self.fcmToken = token
+                    continuation.resume(returning: token)
+                } else {
+                    continuation.resume(returning: nil)
+                }
+            }
+        }
+            
+    }
     
+
     /// Gửi dữ liệu lên server
     private func sendTokenToServer(userID: String? = nil) {
-        guard let deviceToken = deviceToken else { return }
+        guard let fcmToken = fcmToken else { return }
 
         var payload: [String: Any] = [
-            "device_token": deviceToken,
+            "fcmToken": fcmToken,
             "platform": "iOS"
         ]
         
