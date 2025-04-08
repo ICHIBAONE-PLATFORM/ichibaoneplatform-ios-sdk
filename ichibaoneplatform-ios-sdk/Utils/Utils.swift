@@ -7,8 +7,9 @@
 
 import UserNotifications
 
-public class Utils {
-    public static func downloadImage(from url: URL, completion: @escaping (UNNotificationAttachment?) -> Void) {
+@objcMembers
+public class Utils: NSObject {
+    @objc public static func downloadImage(from url: URL, completion: @escaping (UNNotificationAttachment?) -> Void) {
         let task = URLSession.shared.downloadTask(with: url) { (location, _, error) in
             guard let location = location, error == nil else {
                 completion(nil)
@@ -29,7 +30,7 @@ public class Utils {
         task.resume()
     }
     
-    public static func notificationHelper(request: UNNotificationRequest, contentHandler: @escaping (UNNotificationContent) -> Void) {
+    @objc public static func notificationHelper(request: UNNotificationRequest, contentHandler: @escaping (UNNotificationContent) -> Void) {
             var bestAttemptContent: UNMutableNotificationContent?
             bestAttemptContent = request.content.mutableCopy() as? UNMutableNotificationContent
             

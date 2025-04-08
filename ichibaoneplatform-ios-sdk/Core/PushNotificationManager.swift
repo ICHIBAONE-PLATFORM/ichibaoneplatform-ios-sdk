@@ -7,8 +7,9 @@
 import UIKit
 import UserNotifications
 
+@objcMembers
 public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate {
-    public static let shared = PushNotificationManager()
+    @objc public static let shared = PushNotificationManager()
     
     private(set) var deviceToken: String?
     
@@ -16,11 +17,11 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
         super.init()
     }
     
-    public func initialize() {
+    @objc public func initialize() {
         UNUserNotificationCenter.current().delegate = self
     }
     
-    public func registerForRemotePushNotification() {
+    @objc public func registerForRemotePushNotification() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
             DispatchQueue.main.async {
                 if granted {
@@ -31,16 +32,16 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
         }
     }
     
-    public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    @objc public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         self.updateDeviceToken(deviceToken)
     }
 
-    public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    @objc public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
        print("Failed to register: \(error.localizedDescription)")
     }
 
     // Handle foreground notification
-    public func userNotificationCenter(
+    @objc public func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
@@ -49,7 +50,7 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
     }
 
     // Handler user press notification
-    public func userNotificationCenter(
+    @objc public func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void

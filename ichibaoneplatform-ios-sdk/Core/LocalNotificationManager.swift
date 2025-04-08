@@ -6,17 +6,18 @@
 //
 import UserNotifications
 
-public class LocalNotificationManager {
-    public static let shared = LocalNotificationManager()
-    private init() {}
+@objcMembers
+public class LocalNotificationManager: NSObject {
+    @objc public static let shared = LocalNotificationManager()
+    private override init() {}
     
-    public func requestPermission(completion: @escaping (Bool) -> Void) {
+    @objc public func requestPermission(completion: @escaping (Bool) -> Void) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
             completion(granted)
         }
     }
     
-    public func scheduleNotification(title: String, body: String, timeInterval: TimeInterval = 0.1) {
+    @objc public func scheduleNotification(title: String, body: String, timeInterval: TimeInterval = 0.1) {
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body

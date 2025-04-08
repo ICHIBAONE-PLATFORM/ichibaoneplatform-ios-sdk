@@ -7,12 +7,13 @@
 
 import UIKit
 
-public class InAppNotificationManager {
-    public static let shared = InAppNotificationManager()
+@objcMembers
+public class InAppNotificationManager: NSObject {
+    @objc public static let shared = InAppNotificationManager()
 
-    private init() {}
+    private override init() {}
 
-    public func showNotification(title: String, message: String) {
+    @objc public func showNotification(title: String, message: String) {
         guard let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
