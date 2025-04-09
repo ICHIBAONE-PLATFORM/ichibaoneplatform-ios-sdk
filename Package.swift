@@ -26,7 +26,6 @@ let package = Package(
         .target(
             name: "FCM",
             dependencies: [
-                "Core",
                 .product(name: "FirebaseMessaging", package: "firebase-ios-sdk")
             ],
             path: "ichibaoneplatform-ios-sdk/FCM",
