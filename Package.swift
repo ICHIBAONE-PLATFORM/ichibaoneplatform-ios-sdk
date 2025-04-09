@@ -9,7 +9,7 @@ let package = Package(
     products: [
         .library(
             name: "ichibaoneplatform-ios-sdk",
-            targets: ["Core", "FCM"]
+            targets: ["Core", "FCM", "Utils"]
         ),
     ],
     dependencies: [
@@ -33,6 +33,13 @@ let package = Package(
             exclude: [],
             resources: [],
             publicHeadersPath: nil
-        )
+        ),
+        .target(
+            name: "Utils",
+            path: "ichibaoneplatform-ios-sdk/Utils",
+            exclude: [],
+            resources: [],
+            publicHeadersPath: nil
+        ),
     ]
 )
