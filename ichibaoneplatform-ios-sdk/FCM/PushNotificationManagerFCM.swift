@@ -80,9 +80,7 @@ public class PushNotificationManagerFCM: NSObject, UNUserNotificationCenterDeleg
 
         return await withCheckedContinuation { continuation in
             Messaging.messaging().token { token, error in
-                if let error = error {
-                    continuation.resume(returning: nil)
-                } else if let token = token {
+                if let token = token {
                     self.fcmToken = token
                     continuation.resume(returning: token)
                 } else {

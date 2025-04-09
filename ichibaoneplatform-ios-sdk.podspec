@@ -40,6 +40,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.license      = { :type => "MIT", :file => "LICENSE" }
+  spec.swift_versions = ['5.0']
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

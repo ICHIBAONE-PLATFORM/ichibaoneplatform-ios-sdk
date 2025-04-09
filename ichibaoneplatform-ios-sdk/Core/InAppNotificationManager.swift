@@ -14,11 +14,19 @@ public class InAppNotificationManager: NSObject {
     private override init() {}
 
     @objc public func showNotification(title: String, message: String) {
-        guard let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+        guard let windowScene = UIApplication.shared.connectedScenes
+               .compactMap({ $0 as? UIWindowScene })
+               .first,
+             let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }),
+             let rootViewController = keyWindow.rootViewController else {
+           return
+       }
 
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        
-        keyWindow.rootViewController?.present(alert, animated: true)
+       let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+       alert.addAction(UIAlertAction(title: "OK", style: .default))
+
+       DispatchQueue.main.async {
+           rootViewController.present(alert, animated: true)
+       }
     }
 }
