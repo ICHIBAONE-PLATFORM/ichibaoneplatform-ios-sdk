@@ -92,7 +92,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "ichibaoneplatform-ios-sdk", "ichibaoneplatform-ios-sdk/Core/**/*.{h,m,swift}"
+  spec.source_files  = "ichibaoneplatform-ios-sdk", "ichibaoneplatform-ios-sdk/**/*.{h,m,swift}"
 
   spec.subspec "Core" do |core|
         core.source_files = "ichibaoneplatform-ios-sdk/Core/**/*.{h,m,swift}"
