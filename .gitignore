@@ -1,3 +1,5 @@
 Pods
 ichibaoneplatform-ios-sdk.xcworkspace
 .index-build
+.swiftpm
+.DS_Store
