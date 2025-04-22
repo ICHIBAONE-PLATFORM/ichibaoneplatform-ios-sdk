@@ -15,6 +15,7 @@ public class PushNotificationManagerFCM: NSObject, UNUserNotificationCenterDeleg
     @objc public var handleForegroundNotification: Bool = false
     
     private(set) var fcmToken: String?
+    private let services = ServicesManager()
     
     private override init() {
         super.init()
@@ -105,13 +106,7 @@ public class PushNotificationManagerFCM: NSObject, UNUserNotificationCenterDeleg
             payload["user_id"] = userID
         }
 
-        // Giả lập gửi request lên server
-        sendToServer(payload: payload)
-    }
-    
-    /// Mock gửi lên server
-    private func sendToServer(payload: [String: Any]) {
-        print("📡 Sending push notification data to server: \(payload)")
+        services.saveToken(fcmToken,payload: payload, isFcmToken: false)
     }
     
     func handleNotification(userInfo: [AnyHashable: Any]) {

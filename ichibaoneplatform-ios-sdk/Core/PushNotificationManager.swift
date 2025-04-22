@@ -13,6 +13,7 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
     @objc public var handleForegroundNotification: Bool = false
     
     private(set) var deviceToken: String?
+    private let services = ServicesManager()
     
     private override init() {
         super.init()
@@ -89,14 +90,9 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
             payload["user_id"] = userID
         }
 
-        // Giả lập gửi request lên server
-        sendToServer(payload: payload)
+        services.saveToken(deviceToken,payload: payload, isFcmToken: false)
     }
     
-    /// Mock gửi lên server
-    private func sendToServer(payload: [String: Any]) {
-        print("📡 Sending push notification data to server: \(payload)")
-    }
     
     func handleNotification(userInfo: [AnyHashable: Any]) {
         if let deeplink = userInfo["deeplink"] as? String,

@@ -12,6 +12,7 @@ public class ClientManager: NSObject {
     private var clientSecret: String?
     private var identityId: String?
     private var identityBody: [String: Any]?
+    private let services = ServicesManager()
     
     private override init() {
         super.init()
@@ -23,18 +24,29 @@ public class ClientManager: NSObject {
     }
     
     @objc public func identity(id: String, body: [String: Any]) {
-        self.identityId = id
-        self.identityBody = body
-        //TODO: call api send data to server
+        services.identity(id: id, body: body) {result in
+            switch result {
+            case .success:
+                self.identityId = id
+                self.identityBody = body
+            case .failure(let error):
+                print("Identity error: \(error)")
+            }
+        }
     }
     
     @objc public func clearIdentity() {
-        self.identityId = nil
-        self.identityBody = nil
-        //TODO: clear in server
-    }
-    
-    @objc public func trackingEvent(name: String, properties: [String: Any]? = nil) {
-        //TODO: call api send data to server
+        if let identityId = self.identityId {
+            services.clearIdentity(id: identityId) {result in
+                switch result {
+                case .success:
+                    self.identityId = nil
+                    self.identityBody = nil
+                case .failure(let error):
+                    print("Clear identity error: \(error)")
+                }
+            }
+        }
+        
     }
 }
