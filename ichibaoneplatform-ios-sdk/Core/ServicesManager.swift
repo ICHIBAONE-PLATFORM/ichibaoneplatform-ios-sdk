@@ -23,8 +23,8 @@ final class ServicesManager {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         var body: [String: Any] = [
-                "id": id,
-                "body": body
+            "id": id,
+            "body": body
         ]
 
         do {

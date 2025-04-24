@@ -15,7 +15,6 @@ public class TrackEvent: NSObject {
     }
     
     @objc public func trackingEvent(name: String, properties: [String: Any]? = nil) {
-        //TODO: call api send data to server
         services.trackEvent(name, properties: properties)
     }
 }

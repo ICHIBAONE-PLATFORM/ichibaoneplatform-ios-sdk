@@ -14,6 +14,7 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
     
     private(set) var deviceToken: String?
     private let services = ServicesManager()
+    private var deeplinkHandler: ((URL) -> Void)?
     
     private override init() {
         super.init()
@@ -62,7 +63,10 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         let userInfo = response.notification.request.content.userInfo
-        handleNotification(userInfo: userInfo)
+        if let deeplinkString = userInfo["deeplink"] as? String,
+           let deeplinkURL = URL(string: deeplinkString) {
+            deeplinkHandler?(deeplinkURL)
+        }
         completionHandler()
     }
     
@@ -94,12 +98,11 @@ public class PushNotificationManager: NSObject, UNUserNotificationCenterDelegate
     }
     
     
-    func handleNotification(userInfo: [AnyHashable: Any]) {
-        if let deeplink = userInfo["deeplink"] as? String,
-           let url = URL(string: deeplink) {
-            DispatchQueue.main.async {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }
+    @objc public func handleDeeplink(url: URL) {
+        self.deeplinkHandler?(url)
+    }
+    
+    @objc public func onDeeplinkReceived(_ handler: @escaping (URL) -> Void) {
+        self.deeplinkHandler = handler
     }
 }
