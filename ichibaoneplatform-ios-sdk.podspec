@@ -99,6 +99,7 @@ Pod::Spec.new do |spec|
   end
 
   spec.subspec "FCM" do |firebase|
+      firebase.dependency "#{spec.name}/Core"
       firebase.dependency "Firebase/Messaging"
       firebase.source_files = "ichibaoneplatform-ios-sdk/FCM/**/*.{h,m,swift}"
   end
