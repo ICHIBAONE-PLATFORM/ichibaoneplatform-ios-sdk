@@ -18,6 +18,9 @@ let package = Package(
     targets: [
         .target(
             name: "Core",
+            dependencies: [
+                "Utils"
+            ],
             path: "ichibaoneplatform-ios-sdk/Core",
             exclude: [],
             resources: [],

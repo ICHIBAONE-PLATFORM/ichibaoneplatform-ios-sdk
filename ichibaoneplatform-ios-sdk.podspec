@@ -95,6 +95,7 @@ Pod::Spec.new do |spec|
   spec.source_files  = "ichibaoneplatform-ios-sdk", "ichibaoneplatform-ios-sdk/**/*.{h,m,swift}"
 
   spec.subspec "Core" do |core|
+        core.dependency "#{spec.name}/Utils"
         core.source_files = "ichibaoneplatform-ios-sdk/Core/**/*.{h,m,swift}"
   end
 
