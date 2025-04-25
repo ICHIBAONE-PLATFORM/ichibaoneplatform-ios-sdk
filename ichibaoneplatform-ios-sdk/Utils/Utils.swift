@@ -63,7 +63,7 @@ public class Utils: NSObject {
                 return
             }
         
-        self.downloadImage(from: mediaUrl) { attachment in
+        downloadImage(from: mediaUrl) { attachment in
                 if let attachment = attachment {
                     bestAttemptContent.attachments = [attachment]
                 }
