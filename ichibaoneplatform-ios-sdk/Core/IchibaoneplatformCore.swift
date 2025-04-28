@@ -13,6 +13,7 @@
 //
 
 public class IchibaoneplatformCore: NSObject {
+    @objc public static var isFCMEnabled: Bool = false
     @objc public static let clientManager: ClientManager = ClientManager.shared
     @objc public static let localNotificationManager: LocalNotificationManager = LocalNotificationManager.shared
     @objc public static let inAppNotificationManager: InAppNotificationManager = InAppNotificationManager.shared

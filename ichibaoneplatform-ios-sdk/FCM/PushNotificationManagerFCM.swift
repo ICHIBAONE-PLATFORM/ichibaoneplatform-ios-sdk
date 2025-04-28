@@ -25,6 +25,7 @@ public class PushNotificationManagerFCM: NSObject, UNUserNotificationCenterDeleg
     @objc public func initialize() {
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
+        IchibaoneplatformCore.isFCMEnabled = true
     }
     
     @objc public func registerForRemotePushNotification() {
