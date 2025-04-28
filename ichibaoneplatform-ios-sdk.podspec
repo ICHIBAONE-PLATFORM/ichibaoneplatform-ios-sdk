@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "ichibaoneplatform-ios-sdk"
-  spec.version      = "0.1.1"
+  spec.version      = "0.1.2"
   spec.summary      = "Tracking and notification SDK APNs & FCM"
 
   # This description is used to generate tags and improve search results.
